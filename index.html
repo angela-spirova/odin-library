@@ -5,10 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <script src="js/script.js"></script>
+    <script src="js/script.js" defer></script>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    
+    <div class="container">
+        <h1>My Library</h1>
+        <dialog id="add-book-dialog" popover>
+            <form action="">
+                <div>
+                    <label for="title">Title</label>
+                    <input type="text" id="title" required>
+                </div>
+                <div>
+                    <label for="author">Author</label>
+                    <input type="text" id="author" required>
+                </div>
+                <div>
+                    <label for="pages">Number of pages</label>
+                    <input type="number" id="pages" required>
+                </div>
+                <div>
+                    <input type="checkbox" id="read" required>
+                    <label for="read">I have read this book</label>
+                </div>
+                <button type="submit" id="add-book">Add book</button>
+                <button popovertarget="add-book-dialog" popovertargetaction="hide">Cancel</button>
+            </form>
+        </dialog>
+
+        <div class="library">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Pages</th>
+                        <th>Status</th>
+                        <th>*</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Example</td>
+                        <td>John Doe</td>
+                        <td>169</td>
+                        <td><button>Read</button></td>
+                        <td><button>Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button popovertarget="add-book-dialog">Add book</button>
+    </div>
 </body>
 </html>
