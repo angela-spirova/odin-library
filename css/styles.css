@@ -1,0 +1,21 @@
+body{
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+table{
+    border-collapse: collapse;
+}
+thead{
+    background-color: lightgreen;
+}   
+tr{
+    border-bottom:1px solid black;
+}
+
+td{
+    width:100px;
+}
+
+form>div:not(:last-of-type)>*{
+    display: block;
+}
