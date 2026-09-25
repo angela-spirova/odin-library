@@ -12,7 +12,7 @@ tr{
     border-bottom:1px solid black;
 }
 
-td{
+td, th{
     width:100px;
 }
 
