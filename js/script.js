@@ -1,12 +1,4 @@
-const library = [
-    {
-        title: "Example",
-        author: "John Doe",
-        pageNum: "169",
-        hasRead: true,
-        bookID: crypto.randomUUID
-    },
-];
+const library = [];
 
 function Book(title, author, pageNum, hasRead){
     this.title = title;
