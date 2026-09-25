@@ -104,7 +104,8 @@ const bookInfoDialog = document.getElementById("book-info-dialog");
 bookInfoForm.addEventListener("submit", submitBookInfo);
 
 function submitBookInfo(event){
-    addBook(this.title.value, this.author.value, this.pages.value, this.read.value);
+    const hasRead = this.read.checked;
+    addBook(this.title.value, this.author.value, this.pages.value, hasRead);
     displayBook();
     bookInfoDialog.hidePopover();
     bookInfoForm.reset();
