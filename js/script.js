@@ -17,13 +17,41 @@ function Book(title, author, pageNum, hasRead){
     this.bookID = crypto.randomUUID();
 }
 
+function addBook(title, author, pageNum, hasRead){
+    const book = new Book(title, author, pageNum, hasRead);
+    library.push(book);
+    return library;
+}
+
+function changeBookStatus(bookID){
+    for(let i=0; i<library.length; i++){
+        const book = library[i];
+        if(book.bookID == bookID){
+            book.hasRead = !(book.hasRead);
+            return book.hasRead;
+        }
+    }
+    throw Error("Book does not exist.");
+}
+
+function removeBook(bookID){
+    for(let i=0; i<library.length; i++){
+        const book = library[i];
+        if(book.bookID == bookID){
+            library.splice(book, 1);
+            return library;
+        }
+    }
+    throw Error("Book does not exist.");
+}
+
 const booksTable = document.getElementById("books-display");
 
 function displayBook(index=library.length-1){
     const book = library[index];
     const tableRow = document.createElement("tr");
     tableRow.classList.add("book-display");
-    tableRow.id=book.bookID;
+    tableRow.setAttribute("data-book-id", book.bookID);
     booksTable.appendChild(tableRow);
 
     const titleDisplay = document.createElement("td");
@@ -36,6 +64,9 @@ function displayBook(index=library.length-1){
     
     changeStatusButton.classList.add("change-book-status");
     removeButton.classList.add("remove-book");
+    
+    changeStatusButton.setAttribute("data-book-id", book.bookID);
+    removeButton.setAttribute("data-book-id", book.bookID);
 
     titleDisplay.innerText = book.title;
     authorDisplay.innerText = book.author;
@@ -59,4 +90,46 @@ function displayBooks(){
     }
 }
 
+function updateBookStatusDisplay(bookID, hasRead){
+    const changeStatusButton = document.querySelector(`button.change-book-status[data-book-id="${bookID}"]`);
+    changeStatusButton.innerText = `Read ${hasRead ? "✓" : "✗"}`;
+}
+
+function removeBookDisplay(bookID){
+    const bookDisplay = document.querySelector(`tr[data-book-id="${bookID}"]`);
+    while (bookDisplay.firstChild) {
+        bookDisplay.removeChild(bookDisplay.lastChild);
+    }
+    bookDisplay.remove();
+}
+
+
 document.addEventListener("DOMContentLoaded", displayBooks);
+
+const bookInfoForm = document.forms["book-info-form"];
+const bookInfoDialog = document.getElementById("book-info-dialog");
+
+bookInfoForm.addEventListener("submit", submitBookInfo);
+
+function submitBookInfo(event){
+    addBook(this.title.value, this.author.value, this.pages.value, this.read.value);
+    displayBook();
+    bookInfoDialog.hidePopover();
+    event.preventDefault();
+}
+
+booksTable.addEventListener("click", (event) =>{
+    const button = event.target;
+    if(button.nodeName !== "BUTTON"){
+        return ;
+    }
+    const bookID = button.getAttribute("data-book-id");
+    if(button.classList.contains("change-book-status")){
+        const hasRead = changeBookStatus(bookID);
+        updateBookStatusDisplay(bookID, hasRead);
+    }
+    else if(button.classList.contains("remove-book")){
+        removeBook(bookID);
+        removeBookDisplay(bookID);
+    }
+})
