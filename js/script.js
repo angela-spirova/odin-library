@@ -7,23 +7,27 @@ function Book(title, author, pageNum, hasRead){
     this.hasRead = hasRead;
     
     this.bookID = crypto.randomUUID();
+
+}
+
+Book.prototype.changeBookStatus = function(){
+    this.hasRead = !(this.hasRead);
+}
+
+function getBook(bookID){
+    for(let i=0; i<library.length; i++){
+        const book = library[i];
+        if(book.bookID == bookID){
+            return book;
+        }
+    }
+    throw Error("Book does not exist.");
 }
 
 function addBook(title, author, pageNum, hasRead){
     const book = new Book(title, author, pageNum, hasRead);
     library.push(book);
     return library;
-}
-
-function changeBookStatus(bookID){
-    for(let i=0; i<library.length; i++){
-        const book = library[i];
-        if(book.bookID == bookID){
-            book.hasRead = !(book.hasRead);
-            return book.hasRead;
-        }
-    }
-    throw Error("Book does not exist.");
 }
 
 function removeBook(bookID){
@@ -119,8 +123,9 @@ booksTable.addEventListener("click", (event) =>{
     }
     const bookID = button.getAttribute("data-book-id");
     if(button.classList.contains("change-book-status")){
-        const hasRead = changeBookStatus(bookID);
-        updateBookStatusDisplay(bookID, hasRead);
+        const book = getBook(bookID);
+        book.changeBookStatus();
+        updateBookStatusDisplay(bookID, book.hasRead);
     }
     else if(button.classList.contains("remove-book")){
         removeBook(bookID);
