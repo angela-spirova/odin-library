@@ -30,7 +30,7 @@ function removeBook(bookID){
     for(let i=0; i<library.length; i++){
         const book = library[i];
         if(book.bookID == bookID){
-            library.splice(book, 1);
+            library.splice(i, 1);
             return library;
         }
     }
