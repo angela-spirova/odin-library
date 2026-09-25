@@ -107,6 +107,7 @@ function submitBookInfo(event){
     addBook(this.title.value, this.author.value, this.pages.value, this.read.value);
     displayBook();
     bookInfoDialog.hidePopover();
+    bookInfoForm.reset();
     event.preventDefault();
 }
 
