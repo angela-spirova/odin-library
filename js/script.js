@@ -1,17 +1,19 @@
 const library = [];
 
-function Book(title, author, pageNum, hasRead){
-    this.title = title;
-    this.author = author;
-    this.pageNum = pageNum;
-    this.hasRead = hasRead;
+class Book{
+    constructor(title, author, pageNum, hasRead){
+        this.title = title;
+        this.author = author;
+        this.pageNum = pageNum;
+        this.hasRead = hasRead;
     
-    this.bookID = crypto.randomUUID();
+        this.bookID = crypto.randomUUID();
+    }
 
-}
+    changeBookStatus = function(){
+        this.hasRead = !(this.hasRead);
+    }
 
-Book.prototype.changeBookStatus = function(){
-    this.hasRead = !(this.hasRead);
 }
 
 function getBook(bookID){
